@@ -3,9 +3,19 @@ package controllers
 import java.lang._
 import play.api._
 import play.api.mvc._
+import play.api.data._
+import play.api.data.Forms._
+
+import models.Task
+
 
 object Tasks extends Controller {
-  def index = TODO
+  val taskForm = Form(
+    "label" -> nonEmptyText
+  )
+  def index = Action {
+    Ok(views.html.tasks.index(Task.all(), taskForm))
+  }
   def create = TODO
   def destroy(id: Integer) = TODO
 }
