@@ -13,10 +13,19 @@ object Tasks extends Controller {
   val taskForm = Form(
     "label" -> nonEmptyText
   )
+
   def index = Action {
     Ok(views.html.tasks.index(Task.all(), taskForm))
   }
-  def create = TODO
+  def create = Action { implicit request =>
+    taskForm.bindFromRequest.fold(
+      errors => BadRequest(views.html.tasks.index(Task.all(), errors)),
+      label => {
+        Task.create(label)
+        Redirect(routes.Tasks.index)
+      }
+    )
+  }
   def destroy(id: Integer) = TODO
 }
 
