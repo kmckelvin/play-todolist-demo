@@ -1,6 +1,5 @@
 package controllers
 
-import java.lang._
 import play.api._
 import play.api.mvc._
 import play.api.data._
@@ -26,6 +25,9 @@ object Tasks extends Controller {
       }
     )
   }
-  def destroy(id: Integer) = TODO
+  def destroy(id: Long) = Action {
+    Task.delete(id)
+    Redirect(routes.Tasks.index)
+  }
 }
 
